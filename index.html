@@ -429,6 +429,29 @@ ol.steps li strong{color:var(--ink)}
 .fig figcaption{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink2);line-height:1.5}
 .fig figcaption .r{display:block;margin-top:5px;font-family:var(--fm);font-size:10.5px;letter-spacing:.05em;color:var(--ink3);text-transform:uppercase}
 
+/* --- the "explain this properly" layer --- */
+.deep{margin:-4px 0 20px;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden}
+.deep summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;padding:10px 14px;
+              font-family:var(--fm);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink)}
+.deep summary::-webkit-details-marker{display:none}
+.deep summary:hover{background:var(--accent-soft)}
+.deep summary .more{margin-left:auto;color:var(--ink3);font-size:16px;line-height:1;transition:transform .15s}
+.deep[open] summary{border-bottom:1px solid var(--line);background:var(--accent-soft)}
+.deep[open] summary .more{transform:rotate(45deg)}
+.deep-b{padding:14px 16px 4px;font-size:15px;line-height:1.65;color:var(--ink2)}
+.deep-b p{margin:0 0 13px}
+.deep-b b,.deep-b strong{color:var(--ink);font-weight:600}
+.deep-b code,.deep-b .mono{font-family:var(--fm);font-size:.9em;background:var(--sunk);
+                           border:1px solid var(--line);border-radius:4px;padding:.5px 5px;color:var(--ink)}
+.deep-b .eg{margin:0 0 13px;padding:11px 14px;background:var(--sunk);border:1px solid var(--line);
+            border-left:3px solid var(--good);border-radius:0 8px 8px 0;font-size:14.5px}
+.deep-b .eg .al{display:block;font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+                color:var(--good);font-weight:600;margin-bottom:6px}
+.deep-b .why{margin:0 0 13px;padding-left:14px;border-left:3px solid var(--line2)}
+.deep-b ul{margin:0 0 13px;padding-left:20px}
+.deep-b li{margin-bottom:6px}
+.deep-b li::marker{color:var(--ink3)}
+
 /* --- app intro --- */
 .intro{margin-bottom:32px}
 .intro h3{font-family:var(--fd);font-size:21px;margin-bottom:6px}
@@ -598,6 +621,8 @@ pre.pycode .cm{color:var(--ink3)}
   table{font-size:13.5px}
   th,td{padding:8px 10px}
   .note,.trap{font-size:14px;padding:11px 13px}
+  .deep summary{padding:11px 12px;font-size:10.5px}
+  .deep-b{padding:13px 13px 3px;font-size:14.5px}
   .ctx{padding:12px 13px 11px}
   .ctx-b{font-size:14px}
   .ctx-tbl table{font-size:12px}
@@ -710,6 +735,8 @@ pre.pycode .cm{color:var(--ink3)}
   :root.w-lt560 table{font-size:13.5px}
   :root.w-lt560 th, :root.w-lt560 td{padding:8px 10px}
   :root.w-lt560 .note, :root.w-lt560 .trap{font-size:14px;padding:11px 13px}
+  :root.w-lt560 .deep summary{padding:11px 12px;font-size:10.5px}
+  :root.w-lt560 .deep-b{padding:13px 13px 3px;font-size:14.5px}
   :root.w-lt560 .ctx{padding:12px 13px 11px}
   :root.w-lt560 .ctx-b{font-size:14px}
   :root.w-lt560 .ctx-tbl table{font-size:12px}
@@ -1016,6 +1043,9 @@ function renderBlock(b){
     '<img class="fig-d" src="fig/'+b.img+'-dark.png" width="'+b.w+'" height="'+b.h+'" alt="" aria-hidden="true" loading="lazy" decoding="async">'+
     '<figcaption>'+b.cap+'<span class="r">'+esc(b.ref)+'</span></figcaption></figure>';
   if(b.t==='trap') return '<div class="trap">'+b.v+'</div>';
+  if(b.t==='deep') return '<details class="deep"><summary>'+
+    esc(b.title || 'Explain this properly')+
+    '<span class="more" aria-hidden="true">+</span></summary><div class="deep-b">'+b.v+'</div></details>';
   if(b.t==='defs'){
     return '<dl class="defs">'+b.v.map(function(d){
       return '<div><dt>'+d[0]+'</dt><dd>'+d[1]+'</dd></div>';
