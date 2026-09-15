@@ -2,11 +2,12 @@
    Cache-first: after the first visit the app opens instantly and works with no
    signal. CACHE is rebuilt from the file contents on every build, so publishing
    a new version replaces the old cache rather than serving it forever. */
-const CACHE = 'idsv-492755ace3';
+const CACHE = 'idsv-2060bcd213';
 const ASSETS = [
   "./",
   "index.html",
   "questions.js",
+  "context.js",
   "python.js",
   "compendium.js",
   "manifest.webmanifest",

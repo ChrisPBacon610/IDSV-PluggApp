@@ -320,6 +320,45 @@ ol.steps li strong{color:var(--ink)}
 .btn.ghost:hover{color:var(--ink)}
 .kbd{font-family:var(--fm);font-size:10px;border:1px solid var(--line2);border-radius:3px;padding:0 4px;color:var(--ink3);margin-left:6px}
 
+/* --- context panel shown after an answer --- */
+.ctx{margin:0 0 18px;background:var(--sunk);border:1px solid var(--line);border-left:3px solid var(--accent);
+     border-radius:0 9px 9px 0;padding:13px 16px 12px;max-width:100%;
+     animation:ctxin .22s ease-out}
+@keyframes ctxin{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.ctx.hold{border-left-color:var(--ochre)}
+.ctx-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:9px}
+.ctx-k{font-family:var(--fm);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+       color:var(--accent-ink);font-weight:600}
+.ctx.hold .ctx-k{color:var(--ochre)}
+.ctx-ref{margin-left:auto;font-family:var(--fm);font-size:10.5px;color:var(--ink3);letter-spacing:.02em}
+.ctx-b{font-size:14.5px;line-height:1.6;color:var(--ink2)}
+.ctx-b p{margin:0 0 9px}
+.ctx-b p:last-child{margin-bottom:0}
+.ctx-b b{color:var(--ink);font-weight:600}
+.ctx-b .mono{font-family:var(--fm);font-size:.92em;color:var(--ink)}
+.ctx-b sup{font-size:.75em}
+.ctx-trap{display:block;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line2);color:var(--ink2)}
+.ctx-trap::before{content:"Watch out \2014\00a0";font-family:var(--fm);font-size:10px;letter-spacing:.09em;
+                  text-transform:uppercase;color:var(--ochre);font-weight:600}
+.ctx-tbl{overflow-x:auto;margin:4px 0 10px;border:1px solid var(--line);border-radius:7px;background:var(--surface)}
+.ctx-tbl table{width:100%;border-collapse:collapse;font-size:13px}
+.ctx-tbl th{font-family:var(--fm);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
+            color:var(--ink3);font-weight:500;text-align:left;padding:7px 10px;background:var(--sunk);
+            border-bottom:1px solid var(--line);white-space:nowrap}
+.ctx-tbl td{padding:7px 10px;border-bottom:1px solid var(--line);color:var(--ink2);vertical-align:top}
+.ctx-tbl tr:last-child td{border-bottom:0}
+/* the countdown after a correct answer */
+.ctx-f{display:flex;align-items:center;gap:10px;margin-top:11px;padding-top:10px;border-top:1px solid var(--line)}
+.ctx-f .lbl{font-family:var(--fm);font-size:11px;color:var(--ink3);font-variant-numeric:tabular-nums}
+.ctx-f .stay{margin-left:auto;border:1px solid var(--line2);border-radius:99px;padding:3px 11px;
+             font-size:12px;color:var(--ink2);background:var(--surface);white-space:nowrap}
+.ctx-f .stay:hover{border-color:var(--ink3);color:var(--ink)}
+.ctxbar{flex:1 1 4rem;height:3px;border-radius:99px;background:var(--surface2);overflow:hidden;min-width:2.5rem}
+.ctxbar i{display:block;height:100%;background:var(--accent);width:100%;transform-origin:left center;
+          animation:ctxrun linear forwards}
+@keyframes ctxrun{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.ctx{animation:none}.ctxbar i{animation:none;transform:scaleX(0)}}
+
 .side{display:grid;gap:18px;position:sticky;top:calc(var(--topgap,60px) + 16px);min-width:0}
 .scard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;max-width:100%}
 .scard h4{font-family:var(--fm);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:500;margin-bottom:12px}
@@ -466,16 +505,18 @@ pre.pycode .cm{color:var(--ink3)}
 .misslist div{font-size:13.5px;color:var(--ink2);border-left:2px solid var(--bad);padding-left:9px;line-height:1.4}
 
 @media(max-width:960px){
-  .comp,.drill{grid-template-columns:minmax(0,1fr)}
-  .comp{gap:12px}
-  .drill{gap:24px}
+  .comp{grid-template-columns:minmax(0,1fr);gap:12px}
+  /* stacked, the drill is one flow: .dmain dissolves so the sticky bar's
+     containing block becomes the whole panel, side column included */
+  .drill{display:block}
+  .dmain{display:contents}
+  .side{margin-top:24px}
   .rail{position:sticky;top:var(--topgap,60px);z-index:25;background:var(--paper);max-height:none;
         border-bottom:1px solid var(--line);padding:8px 0 10px;margin-bottom:10px;overflow:visible}
   .rail-h{display:none}
   .rail-inner{display:none}
   .railpicker{display:block}
   .side{position:static;grid-template-columns:repeat(auto-fit,minmax(min(14.375rem,100%),1fr))}
-  .dmain{min-width:0}
   .py-actions{margin-left:0;width:100%}
 }
 
@@ -496,7 +537,8 @@ pre.pycode .cm{color:var(--ink3)}
   .tbl.scrolls::-webkit-scrollbar{height:3px}
 
   .chip{white-space:nowrap}
-  .machine th{white-space:nowrap;overflow-wrap:normal}
+  .machine th,.ctx-tbl th{white-space:nowrap;overflow-wrap:normal}
+  .ctx-tbl td{hyphens:none}
   /* two rows, never three: format + Options on top, the pickers underneath */
   .dbar{padding:6px 7px;gap:6px}
   .dbar .seg{flex:1 1 55%;order:1}
@@ -556,6 +598,12 @@ pre.pycode .cm{color:var(--ink3)}
   table{font-size:13.5px}
   th,td{padding:8px 10px}
   .note,.trap{font-size:14px;padding:11px 13px}
+  .ctx{padding:12px 13px 11px}
+  .ctx-b{font-size:14px}
+  .ctx-tbl table{font-size:12px}
+  .ctx-tbl th,.ctx-tbl td{padding:6px 8px}
+  .ctx-f{flex-wrap:wrap;gap:8px}
+  .ctx-f .stay{margin-left:0;order:3;flex:1 1 100%;text-align:center;padding:7px 11px}
   .lede{font-size:15px;margin-bottom:26px}
   .plan h3{font-size:17px}
   .drillbtn{width:100%;text-align:center;padding:9px 12px}
@@ -584,16 +632,16 @@ pre.pycode .cm{color:var(--ink3)}
    Media queries above remain as the pre-script fallback.
    GENERATED from the @media blocks by regen_tiers.py — do not hand-edit. */
 /* <= 960 */
-  :root.w-lt960 .comp, :root.w-lt960 .drill{grid-template-columns:minmax(0,1fr)}
-  :root.w-lt960 .comp{gap:12px}
-  :root.w-lt960 .drill{gap:24px}
+  :root.w-lt960 .comp{grid-template-columns:minmax(0,1fr);gap:12px}
+  :root.w-lt960 .drill{display:block}
+  :root.w-lt960 .dmain{display:contents}
+  :root.w-lt960 .side{margin-top:24px}
   :root.w-lt960 .rail{position:sticky;top:var(--topgap,60px);z-index:25;background:var(--paper);max-height:none;
         border-bottom:1px solid var(--line);padding:8px 0 10px;margin-bottom:10px;overflow:visible}
   :root.w-lt960 .rail-h{display:none}
   :root.w-lt960 .rail-inner{display:none}
   :root.w-lt960 .railpicker{display:block}
   :root.w-lt960 .side{position:static;grid-template-columns:repeat(auto-fit,minmax(min(14.375rem,100%),1fr))}
-  :root.w-lt960 .dmain{min-width:0}
   :root.w-lt960 .py-actions{margin-left:0;width:100%}
 /* <= 700 */
   :root.w-lt700 .wrap{padding-block:18px 56px}
@@ -607,7 +655,8 @@ pre.pycode .cm{color:var(--ink3)}
                mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent)}
   :root.w-lt700 .tbl.scrolls::-webkit-scrollbar{height:3px}
   :root.w-lt700 .chip{white-space:nowrap}
-  :root.w-lt700 .machine th{white-space:nowrap;overflow-wrap:normal}
+  :root.w-lt700 .machine th, :root.w-lt700 .ctx-tbl th{white-space:nowrap;overflow-wrap:normal}
+  :root.w-lt700 .ctx-tbl td{hyphens:none}
   :root.w-lt700 .dbar{padding:6px 7px;gap:6px}
   :root.w-lt700 .dbar .seg{flex:1 1 55%;order:1}
   :root.w-lt700 .dbar .seg button{flex:1 1 0;text-align:center;padding:7px 5px;min-height:2.1rem;font-size:12.5px}
@@ -661,6 +710,12 @@ pre.pycode .cm{color:var(--ink3)}
   :root.w-lt560 table{font-size:13.5px}
   :root.w-lt560 th, :root.w-lt560 td{padding:8px 10px}
   :root.w-lt560 .note, :root.w-lt560 .trap{font-size:14px;padding:11px 13px}
+  :root.w-lt560 .ctx{padding:12px 13px 11px}
+  :root.w-lt560 .ctx-b{font-size:14px}
+  :root.w-lt560 .ctx-tbl table{font-size:12px}
+  :root.w-lt560 .ctx-tbl th, :root.w-lt560 .ctx-tbl td{padding:6px 8px}
+  :root.w-lt560 .ctx-f{flex-wrap:wrap;gap:8px}
+  :root.w-lt560 .ctx-f .stay{margin-left:0;order:3;flex:1 1 100%;text-align:center;padding:7px 11px}
   :root.w-lt560 .lede{font-size:15px;margin-bottom:26px}
   :root.w-lt560 .plan h3{font-size:17px}
   :root.w-lt560 .drillbtn{width:100%;text-align:center;padding:9px 12px}
@@ -829,6 +884,7 @@ pre.pycode .cm{color:var(--ink3)}
           <button data-order="seq" aria-pressed="false">In order</button>
         </div>
         <button class="chip" id="svbtn" aria-pressed="false">Show Swedish</button>
+        <button class="chip" id="autobtn" aria-pressed="true">Auto-advance</button>
         <button class="chip" id="bpbtn" aria-pressed="false" hidden>Exam shape</button>
         <button class="chip" id="syncbtn" aria-expanded="false">Sync devices</button>
         <button class="btn ghost" id="resetbtn">Reset progress</button>
@@ -880,6 +936,7 @@ pre.pycode .cm{color:var(--ink3)}
 </div><!-- /#app -->
 
 <script src="questions.js"></script>
+<script src="context.js"></script>
 <script src="python.js"></script>
 <script src="compendium.js"></script>
 <script>
@@ -890,13 +947,14 @@ var QBYID = {}; Q.forEach(function(q){ QBYID[q.id]=q; });
 var MACHINE = window.MACHINE_2025GA || null;
 var MPRACTICE = window.MACHINE_PRACTICE || null;
 var C = window.COMPENDIUM || [];
+var CTX = window.CONTEXT || {sub:{},id:{}};
 var SN = window.SUBJECT_NAMES || {};
 var TOPIC_TITLE = {}; C.forEach(function(t){ TOPIC_TITLE[t.id]=t.title; });
 var esc = function(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
 
 /* ---------------- state ---------------- */
-var state = { marks:{}, scopes:null, limit:0, format:'practice', order:'smart', sv:false, bar:true,
-               idx:0, revealed:false, picked:null, queue:[], typed:{}, py:{}, mock:null };
+var state = { marks:{}, scopes:null, limit:0, format:'practice', order:'smart', sv:false, bar:true, auto:true,
+               idx:0, revealed:false, picked:null, justGraded:null, queue:[], typed:{}, py:{}, mock:null };
 var LS='idsv-progress-v1', PROF='idsv-sync-code';
 var db=null, dbdoc=null, saveTimer=null, syncCode=null;
 
@@ -925,11 +983,12 @@ function loadLocal(){
     if(o&&(o.scopes===null||Object.prototype.toString.call(o.scopes)==='[object Array]')) state.scopes=o.scopes;
     if(o&&typeof o.limit==='number') state.limit=o.limit;
     if(o&&typeof o.bar==='boolean') state.bar=o.bar;
+    if(o&&typeof o.auto==='boolean') state.auto=o.auto;
   } }catch(e){}
 }
 function saveLocal(){
   try{ localStorage.setItem(LS, JSON.stringify({marks:state.marks, sv:state.sv, py:state.py,
-        scopes:state.scopes, limit:state.limit, bar:state.bar})); }catch(e){}
+        scopes:state.scopes, limit:state.limit, bar:state.bar, auto:state.auto})); }catch(e){}
 }
 function save(){
   saveLocal();
@@ -1109,6 +1168,53 @@ function optionsFor(q){
 }
 function normalize(s){ return String(s).toLowerCase().replace(/[\s.]+$/,'').trim(); }
 
+/* ---------------- context after an answer ----------------
+   Right: the panel holds for a few seconds and then moves on by itself, unless
+   the reader touches it. Wrong: it stays until Next is pressed. */
+function contextFor(q){ return (CTX.id && CTX.id[q.id]) || (CTX.sub && CTX.sub[q.subj]) || null; }
+function ctxSeconds(c){ return c.t==='l' ? 11 : c.t==='m' ? 7 : 5; }
+
+var ctxTimer=null, ctxHeld=false;
+function clearCtxTimer(){ if(ctxTimer){ clearTimeout(ctxTimer); ctxTimer=null; } }
+function holdContext(){
+  if(!ctxTimer && ctxHeld) return;
+  clearCtxTimer(); ctxHeld=true;
+  var f=document.getElementById('ctxfoot');
+  if(f) f.innerHTML='<span class="lbl">Paused \u2014 press Next when you are ready</span>';
+}
+function contextHTML(q, grade){
+  var c=contextFor(q); if(!c) return '';
+  var wrong = grade===0;
+  var secs=ctxSeconds(c);
+  var h='<div class="ctx'+(wrong?' hold':'')+'" id="ctxbox" tabindex="-1">'+
+        '<div class="ctx-h"><span class="ctx-k">'+(wrong?'Read this one':'Worth knowing')+'</span>'+
+        '<span class="ctx-ref">'+esc(c.r)+'</span></div>'+
+        '<div class="ctx-b">'+c.h+'</div>';
+  if(!wrong && state.auto && !ctxHeld && state.justGraded!==null){
+    h+='<div class="ctx-f" id="ctxfoot">'+
+       '<span class="lbl">Next in '+secs+'s</span>'+
+       '<span class="ctxbar"><i style="animation-duration:'+secs+'s"></i></span>'+
+       '<button class="stay" id="ctxstay">Stay on this</button></div>';
+  } else if(!wrong){
+    h+='<div class="ctx-f" id="ctxfoot"><span class="lbl">'+
+       (ctxHeld?'Paused \u2014 press Next when you are ready':'Press Next when you are ready')+'</span></div>';
+  }
+  return h+'</div>';
+}
+function wireContext(q, grade, live){
+  var box=document.getElementById('ctxbox'); if(!box) return;
+  var stay=document.getElementById('ctxstay');
+  if(stay) stay.onclick=function(e){ e.stopPropagation(); holdContext(); };
+  /* any deliberate touch of the panel keeps it up */
+  box.addEventListener('pointerdown', holdContext);
+  box.addEventListener('focusin', holdContext);
+  if(live && grade!==0 && state.auto && !ctxHeld){
+    var ms=ctxSeconds(contextFor(q))*1000;
+    clearCtxTimer();
+    ctxTimer=setTimeout(function(){ ctxTimer=null; next(); }, ms);
+  }
+}
+
 function sectionOf(q){
   if(state.format!=='mock' || !state.mock) return null;
   for(var i=0;i<state.mock.items.length;i++) if(state.mock.items[i].q.id===q.id) return state.mock.items[i].section;
@@ -1187,9 +1293,20 @@ function renderCard(){
 
   var mock = state.format==='mock' && state.mock;
   var last = mock && state.idx===state.queue.length-1;
-  var fwd  = last ? 'Finish the paper →' : (mock ? 'Next →' : 'Skip →');
+
+  /* the panel appears once the question has actually been answered — on the
+     mark for a written answer, on the pick for a multiple choice */
+  var ctxGrade = state.justGraded;
+  if(ctxGrade===null && state.revealed && mock && state.mock.grades[q.id]!==undefined)
+    ctxGrade = state.mock.grades[q.id];
+  if(ctxGrade!==null) h+=contextHTML(q, ctxGrade);
+
+  var graded = ctxGrade!==null;
+  var fwd  = last ? 'Finish the paper →' : (mock ? 'Next →' : (graded ? 'Next →' : 'Skip →'));
   h+='<div class="cact">';
-  if(!state.revealed){
+  if(graded){
+    h+='<button class="btn primary" id="gonext">'+fwd+'<span class="kbd">space</span></button>';
+  } else if(!state.revealed){
     h+='<button class="btn primary" id="reveal">'+(opts?'Show answer':'Check my answer')+'<span class="kbd">space</span></button>';
   } else {
     h+='<button class="btn good" id="gotit">Got it<span class="kbd">1</span></button>';
@@ -1199,7 +1316,7 @@ function renderCard(){
      control rather than two buttons in different places */
   h+='<div class="navpair">';
   if(mock) h+='<button class="btn ghost" id="back"'+(state.idx>0?'':' disabled')+'>← Back</button>';
-  h+='<button class="btn ghost" id="skip">'+fwd+'</button>';
+  if(!graded) h+='<button class="btn ghost" id="skip">'+fwd+'</button>';
   h+='</div></div>';
   card.innerHTML=h;
 
@@ -1213,6 +1330,8 @@ function renderCard(){
   var r=document.getElementById('reveal'); if(r) r.onclick=reveal;
   var sk=document.getElementById('skip'); if(sk) sk.onclick=function(){ next(); };
   var bk=document.getElementById('back'); if(bk) bk.onclick=function(){ prev(); };
+  var gn=document.getElementById('gonext'); if(gn) gn.onclick=function(){ next(); };
+  if(graded) wireContext(q, ctxGrade, state.justGraded!==null);
   var g=document.getElementById('gotit'); if(g) g.onclick=function(){ mark(1); };
   var b=document.getElementById('notyet'); if(b) b.onclick=function(){ mark(0); };
   [].slice.call(card.querySelectorAll('[data-opt]')).forEach(function(el){
@@ -1241,9 +1360,10 @@ function mark(s, stay){
   var prevMark=state.marks[q.id];
   state.marks[q.id]={s:s, n:(prevMark?prevMark.n:0)+1, t:Date.now()};
   if(state.format==='mock' && state.mock){ state.mock.grades[q.id]=s; state.mock.revealed[q.id]=1; }
+  state.justGraded=s;
   save(); renderStats();
-  if(stay){ renderCard(); setTimeout(next, 1100); }
-  else next();
+  /* no jumping straight on any more — the context panel decides when to move */
+  renderCard();
 }
 /* Every move to another question starts you at the top of the page, so a long
    card never leaves you halfway down the next one. */
@@ -1264,6 +1384,7 @@ function toTop(){
    chosen, so you can walk back and forth over the paper without losing work. */
 function goTo(i){
   captureTyped();
+  clearCtxTimer(); ctxHeld=false; state.justGraded=null;
   state.idx=i;
   var q=state.queue[i];
   if(state.format==='mock' && state.mock){
@@ -1388,6 +1509,7 @@ function setScopes(list, quiet){
   applyScopes(quiet);
 }
 function applyScopes(quiet){
+  clearCtxTimer(); ctxHeld=false; state.justGraded=null;
   saveLocal();
   renderScopeList();
   buildQueue(); renderStats();
@@ -1405,6 +1527,7 @@ function renderSizeList(){
   if(v) v.textContent = state.limit ? String(state.limit) : 'All';
 }
 function setLimit(n){
+  clearCtxTimer(); ctxHeld=false; state.justGraded=null;
   state.limit=n; saveLocal();
   renderSizeList(); renderScopeBtn();
   buildQueue(); renderCard(); renderStats();
@@ -1471,6 +1594,7 @@ function wirePickers(){
 
 /* ---------------- controls ---------------- */
 function setMode(m){
+  clearCtxTimer();
   ['comp','drill','py'].forEach(function(k){
     document.getElementById('panel-'+k).hidden = m!==k;
     document.getElementById('m-'+k).setAttribute('aria-pressed', m===k?'true':'false');
@@ -1480,6 +1604,7 @@ function setMode(m){
 
 function setFormat(f){
   if(state.format===f) return;
+  clearCtxTimer(); ctxHeld=false; state.justGraded=null;
   state.format=f;
   [].slice.call(document.querySelectorAll('[data-fmt]')).forEach(function(x){
     x.setAttribute('aria-pressed', x.getAttribute('data-fmt')===f?'true':'false');
@@ -1520,6 +1645,12 @@ function buildControls(){
     this.setAttribute('aria-expanded', el.hidden?'false':'true');
     measure();
   };
+  document.getElementById('autobtn').onclick=function(){
+    state.auto=!state.auto; this.setAttribute('aria-pressed', state.auto?'true':'false');
+    saveLocal();
+    if(!state.auto) clearCtxTimer();
+    renderCard();
+  };
   document.getElementById('svbtn').onclick=function(){
     state.sv=!state.sv; this.setAttribute('aria-pressed', state.sv?'true':'false'); save(); renderCard();
   };
@@ -1556,6 +1687,7 @@ document.addEventListener('keydown', function(e){
   if(!state.queue.length) return;
   if(state.format==='mock' && state.mock && state.mock.done) return;
   if(e.key===' '){ e.preventDefault(); if(!state.revealed) reveal(); else next(); }
+  else if(e.key==='Enter' && state.justGraded!==null){ e.preventDefault(); next(); }
   else if(e.key==='1' && state.revealed){ mark(1); }
   else if(e.key==='2' && state.revealed){ mark(0); }
   else if(e.key==='ArrowRight'){ next(); }
@@ -1615,6 +1747,7 @@ function drawCount(base, poolSize){
 }
 
 function newPaper(){
+  clearCtxTimer(); ctxHeld=false; state.justGraded=null;
   var used={}, items=[];
   var core=BP.filter(function(b){return b.tier==='core';});
   var extra=BP.filter(function(b){return b.tier==='extra';});
@@ -1928,28 +2061,44 @@ function renderPython(){
 }
 
 /* ---------------- sticky offsets ---------------- */
+var lastGap='', lastAnchor='';
 function measure(){
   var top=document.querySelector('.top');
   var rail=document.querySelector('.rail');
-  var th=top?Math.round(top.getBoundingClientRect().height):60;
+  var th=top?Math.floor(top.getBoundingClientRect().height):60;
   var comp=document.getElementById('panel-comp');
   var rs=rail?getComputedStyle(rail).position:'static';
   /* The rail only sits ABOVE the text in the stacked layout; as a desktop side
      column its height must not be added to the anchor offset. */
   var stacked=document.documentElement.classList.contains('w-lt960');
-  var rh=(rail&&stacked&&rs==='sticky'&&comp&&!comp.hidden)?Math.round(rail.getBoundingClientRect().height):0;
+  var rh=(rail&&stacked&&rs==='sticky'&&comp&&!comp.hidden)?Math.ceil(rail.getBoundingClientRect().height):0;
   var r=document.documentElement;
-  r.style.setProperty('--topgap', th+'px');
-  r.style.setProperty('--anchorgap', (th+rh+14)+'px');
+  var gap=th+'px', anchor=(th+rh+14)+'px';
+  if(gap!==lastGap){ r.style.setProperty('--topgap', gap); lastGap=gap; }
+  if(anchor!==lastAnchor){ r.style.setProperty('--anchorgap', anchor); lastAnchor=anchor; }
 }
 function markScrollingTables(){
   [].slice.call(document.querySelectorAll('.tbl')).forEach(function(t){
     t.classList.toggle('scrolls', t.scrollWidth > t.clientWidth + 1);
   });
 }
-window.addEventListener('resize', function(){ if(window.setWidthTiers) window.setWidthTiers();
-  if(openPicker) setPickerOpen(openPicker,false);
-  measure(); markScrollingTables(); });
+var reflowPending=false, lastVW=0;
+function onViewportChange(){
+  if(reflowPending) return;
+  reflowPending=true;
+  requestAnimationFrame(function(){
+    reflowPending=false;
+    var w=Math.round(document.documentElement.clientWidth);
+    if(window.setWidthTiers) window.setWidthTiers();
+    measure();
+    /* only the width can change which tables overflow, and that reading forces
+       a synchronous layout — so skip it for the height-only resizes a phone
+       fires on every URL-bar nudge */
+    if(w!==lastVW){ lastVW=w; markScrollingTables(); if(openPicker) setPickerOpen(openPicker,false); }
+  });
+}
+window.addEventListener('resize', onViewportChange, {passive:true});
+if(window.visualViewport) window.visualViewport.addEventListener('resize', onViewportChange, {passive:true});
 window.addEventListener('orientationchange', function(){ setTimeout(measure,150); });
 if(document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ if(window.setWidthTiers) window.setWidthTiers(); measure(); markScrollingTables(); }).catch(function(){});
 
@@ -1974,6 +2123,7 @@ renderStats();
 renderMockBar();
 setBarOpen(state.bar);
 document.getElementById('svbtn').setAttribute('aria-pressed', state.sv?'true':'false');
+document.getElementById('autobtn').setAttribute('aria-pressed', state.auto?'true':'false');
 hadCodeAtBoot = !!loadCode();
 hadLocalAtBoot = Object.keys(state.marks).length>0 || Object.keys(state.py).length>0;
 syncCode = loadCode() || makeCode();

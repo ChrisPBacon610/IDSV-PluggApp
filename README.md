@@ -78,6 +78,7 @@ silently picking one — check the *Watch out* box under those questions.
 |---|---|
 | `index.html` | the whole app: markup, styles and logic |
 | `questions.js` | the 521-question bank, the exam blueprint, the machine-language appendices |
+| `context.js` | the after-answer explanations, keyed by subject |
 | `compendium.js` | the compendium text, per topic |
 | `python.js` | the 20 Python cards |
 | `fig/` | 28 diagrams, a light and a dark version of each |
