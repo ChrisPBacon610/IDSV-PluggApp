@@ -1,6 +1,6 @@
 # IDSV Tentaplugg
 
-Revision for the IDSV exam: a condensed compendium of the course, 521 drill
+Revision for the IDSV exam: a condensed compendium of the course, 448 drill
 questions with a mock-exam mode, and a Python primer for the programming
 assignment.
 
@@ -77,9 +77,9 @@ silently picking one — check the *Watch out* box under those questions.
 | | |
 |---|---|
 | `index.html` | the whole app: markup, styles and logic |
-| `questions.js` | the 521-question bank, the exam blueprint, the machine-language appendices |
+| `questions.js` | the 448-question bank, the exam blueprint, the machine-language appendices |
 | `context.js` | the after-answer explanations, keyed by subject |
 | `compendium.js` | the compendium text, per topic |
 | `python.js` | the 20 Python cards |
-| `fig/` | 28 diagrams, a light and a dark version of each |
+| `fig/` | 19 diagrams, a light and a dark version of each |
 | `sw.js` | the offline cache |

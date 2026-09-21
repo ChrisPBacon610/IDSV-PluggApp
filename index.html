@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Revision for the IDSV exam (Introduction to Computer and Systems Sciences) &mdash; a condensed compendium, 521 drill questions with a mock-exam mode, and a Python primer. Built from the course lecture slides, the fr&aring;gor-och-svar answer key and Brookshear, Computer Science: An Overview, 13th ed.">
+<meta name="description" content="Revision for the IDSV exam (Introduction to Computer and Systems Sciences) &mdash; a condensed compendium, 448 drill questions with a mock-exam mode, and a Python primer. Built from the course lecture slides, the fr&aring;gor-och-svar answer key and Brookshear, Computer Science: An Overview, 13th ed.">
 <!-- course material: keep it findable by the people you send the link to, not by search engines -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="IDSV">
 <meta property="og:title" content="IDSV Tentaplugg">
-<meta property="og:description" content="Compendium, 521 drill questions, mock exams and a Python primer for the IDSV exam.">
+<meta property="og:description" content="Compendium, 448 drill questions, mock exams and a Python primer for the IDSV exam.">
 <meta property="og:type" content="website">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="icon-192.png" type="image/png">
@@ -1075,7 +1075,7 @@ function buildIntro(){
      'All '+Q.length+' questions from the fr\u00e5gor-och-svar sheet, plus a Generative AI set the sheet is missing. Tick as many topics as you like in <strong>Topics</strong>, set a <strong>Length</strong>, and work through them. Multiple-choice grades itself; for the rest you type your answer, compare it with the key, and mark it yourself.',
      '<strong>Weakest first</strong>, under Options, puts everything you missed back at the front, so the list shortens as you go.'],
     ['Drill \u00b7 Mock exam','rehearse',
-     'The same cards, dealt as a paper: the 23 sections of the real <strong>tag-2025gC</strong> exam every time, topped up towards 30 questions with a rotating sample of the rest of the course, so no two papers cover the same ground.',
+     'The same cards, dealt as a paper: every section of the real <strong>tag-2025gC</strong> exam that is still on the course, topped up towards 30 questions with a rotating sample of the rest of the course, so no two papers cover the same ground.',
      'A clock runs while you work, you get a score and a list of what you missed at the end, and everything you mark wrong lands in the weak list.'],
     ['Python','write code',
      'The exam ends with a Python programming assignment worth 6 points. Twenty short cards cover the built-ins it actually needs \u2014 <code>input()</code>, f-strings, the <code>while True</code> loop that stops on a sentinel word, lists and dictionaries, <code>sum()</code> and <code>len()</code>, <code>def</code>.',
@@ -1742,11 +1742,13 @@ function renderBlueprint(){
              '<span class="c">'+d+'<span class="pooln">/'+n+'</span></span></div>';
     }).join('')+'</div>';
   }
-  el.innerHTML='<div class="cs-h">Always on the paper \u2014 the '+core.length+' sections of tag-2025gC</div>'+
+  el.innerHTML='<div class="cs-h">Always on the paper \u2014 the '+core.length+' tag-2025gC sections still on the course</div>'+
     rows(core,true)+
     '<div class="cs-h" style="margin-top:16px">Rotating \u2014 the rest of the course, sampled each time</div>'+
     rows(extra,false)+
-    '<div class="bp-note">tag-2025gC itself had '+total+' questions across its '+core.length+' sections. '+
+    '<div class="bp-note">tag-2025gC had 29 questions in 23 sections. Three of those sections \u2014 data structures, '+
+    'pointers and databases \u2014 came from chapters 8 and 9, which are no longer on the course, so they are left out; '+
+    'the remaining '+core.length+' account for '+total+' questions. '+
     'Every paper here keeps those sections and then tops up towards '+TARGET_LO+'\u2013'+TARGET_HI+' questions with a '+
     'different handful of the other '+extra.length+' topics, so no two papers cover the same ground. '+
     'The figure after each section is how many questions that section can draw from. '+
@@ -2145,6 +2147,12 @@ try{ var th=localStorage.getItem('idsv-theme'); if(th) document.documentElement.
 
 /* ---------------- boot ---------------- */
 loadLocal();
+/* a saved topic selection may name topics that have since left the course */
+if(state.scopes){
+  var live=activeTopics();
+  var kept=state.scopes.filter(function(id){ return live.indexOf(id)>=0; });
+  state.scopes = (kept.length===0 && state.scopes.length>0) || kept.length===live.length ? null : kept;
+}
 buildCompendium();
 buildControls();
 buildQueue();
