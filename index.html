@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Revision for the IDSV exam (Introduction to Computer and Systems Sciences) &mdash; a condensed compendium, 448 drill questions with a mock-exam mode, and a Python primer. Built from the course lecture slides, the fr&aring;gor-och-svar answer key and Brookshear, Computer Science: An Overview, 13th ed.">
+<meta name="description" content="Revision for the IDSV exam (Introduction to Computer and Systems Sciences) &mdash; a condensed compendium, 448 drill questions with a mock-exam mode, 244 flashcards and a Python primer. Built from the course lecture slides, the fr&aring;gor-och-svar answer key and Brookshear, Computer Science: An Overview, 13th ed.">
 <!-- course material: keep it findable by the people you send the link to, not by search engines -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light dark">
@@ -12,7 +12,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="IDSV">
 <meta property="og:title" content="IDSV Tentaplugg">
-<meta property="og:description" content="Compendium, 448 drill questions, mock exams and a Python primer for the IDSV exam.">
+<meta property="og:description" content="Compendium, 448 drill questions, 244 flashcards, mock exams and a Python primer for the IDSV exam.">
 <meta property="og:type" content="website">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" href="icon-192.png" type="image/png">
@@ -179,6 +179,7 @@ ol.steps li strong{color:var(--ink)}
 .dbar .sizepicker{flex:0 0 auto;width:8.25rem}
 .dbar .picker-btn{padding:6px 11px;min-height:2.25rem;font-size:13.5px;gap:7px}
 .optbtn{margin-left:auto;flex:0 0 auto}
+.optbtn .oi{display:none;font-size:16px;line-height:1;letter-spacing:.05em}
 /* the bar collapses to a one-line strip so it can be got out of the way while
    scrolling, without losing the place marker or the clock */
 .barhide{flex:0 0 auto;width:1.75rem;height:1.75rem;border:1px solid var(--line);border-radius:7px;
@@ -429,6 +430,33 @@ ol.steps li strong{color:var(--ink)}
 .fig figcaption{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:13.5px;color:var(--ink2);line-height:1.5}
 .fig figcaption .r{display:block;margin-top:5px;font-family:var(--fm);font-size:10.5px;letter-spacing:.05em;color:var(--ink3);text-transform:uppercase}
 
+/* --- flashcards --- */
+.fc{max-width:100%}
+.fc-meta{display:flex;align-items:center;gap:10px;margin:1.125rem 0 12px;flex-wrap:wrap}
+.fc-card{display:block;perspective:1600px;cursor:pointer;outline:none;border-radius:14px;
+         -webkit-tap-highlight-color:transparent}
+.fc-inner{display:grid;transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.fc-card.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;
+         background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+         padding:clamp(1.4rem,5vw,2.4rem);min-height:15.5rem;min-width:0;
+         display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.fc-card:hover .fc-front{border-color:var(--line2)}
+.fc-card:focus-visible .fc-face{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft),var(--shadow)}
+.fc-back{transform:rotateY(180deg);border-top:3px solid var(--accent);align-items:stretch;text-align:left}
+.fc-k{font-family:var(--fm);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+.fc-back .fc-k{color:var(--accent-ink);font-weight:600;letter-spacing:.06em}
+.fc-back .fc-k code{font-family:var(--fm);text-transform:none;letter-spacing:0;background:none;border:0;padding:0}
+.fc-term{font-family:var(--fd);font-size:clamp(25px,6vw,36px);line-height:1.2;font-weight:600;color:var(--ink);
+         overflow-wrap:anywhere;max-width:100%}
+.fc-term code{font-family:var(--fm);font-size:.82em;font-weight:500}
+.fc-hint{margin-top:22px;font-size:12.5px;color:var(--ink3)}
+.fc-def{font-size:17px;line-height:1.62;color:var(--ink);overflow-wrap:anywhere}
+.fc-def b,.fc-def strong{font-weight:600}
+.fc-def code{font-family:var(--fm);font-size:.88em;background:var(--sunk);border:1px solid var(--line);
+             border-radius:4px;padding:.5px 5px}
+.fc .cact{margin-top:16px}
+
 /* --- the "explain this properly" layer --- */
 .deep{margin:-4px 0 20px;border:1px solid var(--line);border-radius:9px;background:var(--surface);overflow:hidden}
 .deep summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;padding:10px 14px;
@@ -622,6 +650,8 @@ pre.pycode .cm{color:var(--ink3)}
   th,td{padding:8px 10px}
   .note,.trap{font-size:14px;padding:11px 13px}
   .deep summary{padding:11px 12px;font-size:10.5px}
+  .fc-face{min-height:13.5rem}
+  .fc-def{font-size:16px}
   .deep-b{padding:13px 13px 3px;font-size:14.5px}
   .ctx{padding:12px 13px 11px}
   .ctx-b{font-size:14px}
@@ -645,6 +675,12 @@ pre.pycode .cm{color:var(--ink3)}
   table{font-size:12.5px}
   th{font-size:9px;letter-spacing:.02em}
   .modes button{font-size:11.5px;padding:8px 2px}
+  /* three formats need the width: Options folds to an icon */
+  .optbtn{padding:4px 9px}
+  .optbtn .ol{display:none}
+  .optbtn .oi{display:inline}
+  .dbar{gap:5px;padding:6px 6px}
+  .dbar .seg button{padding:7px 2px;font-size:11.5px;letter-spacing:-.015em}
   #scopecount{display:none}
   .topic h2{font-size:22px}
   .qtext{font-size:17.5px}
@@ -736,6 +772,8 @@ pre.pycode .cm{color:var(--ink3)}
   :root.w-lt560 th, :root.w-lt560 td{padding:8px 10px}
   :root.w-lt560 .note, :root.w-lt560 .trap{font-size:14px;padding:11px 13px}
   :root.w-lt560 .deep summary{padding:11px 12px;font-size:10.5px}
+  :root.w-lt560 .fc-face{min-height:13.5rem}
+  :root.w-lt560 .fc-def{font-size:16px}
   :root.w-lt560 .deep-b{padding:13px 13px 3px;font-size:14.5px}
   :root.w-lt560 .ctx{padding:12px 13px 11px}
   :root.w-lt560 .ctx-b{font-size:14px}
@@ -757,6 +795,11 @@ pre.pycode .cm{color:var(--ink3)}
   :root.w-lt400 table{font-size:12.5px}
   :root.w-lt400 th{font-size:9px;letter-spacing:.02em}
   :root.w-lt400 .modes button{font-size:11.5px;padding:8px 2px}
+  :root.w-lt400 .optbtn{padding:4px 9px}
+  :root.w-lt400 .optbtn .ol{display:none}
+  :root.w-lt400 .optbtn .oi{display:inline}
+  :root.w-lt400 .dbar{gap:5px;padding:6px 6px}
+  :root.w-lt400 .dbar .seg button{padding:7px 2px;font-size:11.5px;letter-spacing:-.015em}
   :root.w-lt400 #scopecount{display:none}
   :root.w-lt400 .topic h2{font-size:22px}
   :root.w-lt400 .qtext{font-size:17.5px}
@@ -858,6 +901,7 @@ pre.pycode .cm{color:var(--ink3)}
         <div class="seg" role="group" aria-label="Drill format">
           <button data-fmt="practice" aria-pressed="true">Practice</button>
           <button data-fmt="mock" aria-pressed="false">Mock exam</button>
+          <button data-fmt="flash" aria-pressed="false">Flashcards</button>
         </div>
 
         <div class="bargroup" id="practicebar">
@@ -898,7 +942,7 @@ pre.pycode .cm{color:var(--ink3)}
           <span class="clock" id="clock"></span>
         </div>
 
-        <button class="chip optbtn" id="optbtn" aria-expanded="false">Options</button>
+        <button class="chip optbtn" id="optbtn" aria-expanded="false" aria-label="Options"><span class="ol">Options</span><span class="oi" aria-hidden="true">⋯</span></button>
         <span class="barsum" id="barsum"></span>
         <button class="barhide" id="barhide" aria-expanded="true" aria-controls="dbar"
                 title="Hide these controls" aria-label="Hide these controls"><span class="cv" aria-hidden="true"></span></button>
@@ -920,6 +964,7 @@ pre.pycode .cm{color:var(--ink3)}
       <div class="bp" id="bp" hidden></div>
 
       <div class="card" id="card"></div>
+      <div class="fc" id="flash" hidden></div>
       <div class="mocknav" id="mocknav" hidden></div>
       <div class="result" id="mockresult" hidden></div>
     </div>
@@ -929,16 +974,16 @@ pre.pycode .cm{color:var(--ink3)}
         <div class="bignum" id="pctnum">0<span>%</span></div>
         <div class="meter"><i class="m-ok" id="mok" style="width:0"></i><i class="m-bad" id="mbad" style="width:0"></i></div>
         <div class="legend">
-          <span><span class="dot" style="background:var(--good)"></span>Got it <b id="nok">0</b></span>
-          <span><span class="dot" style="background:var(--bad)"></span>Not yet <b id="nbad">0</b></span>
+          <span><span class="dot" style="background:var(--good)"></span><span id="lok">Got it</span> <b id="nok">0</b></span>
+          <span><span class="dot" style="background:var(--bad)"></span><span id="lbad">Not yet</span> <b id="nbad">0</b></span>
           <span><span class="dot" style="background:var(--line2)"></span>Unseen <b id="nnew">0</b></span>
         </div>
       </div>
-      <div class="scard">
+      <div class="scard" id="sc-topic">
         <h4>By topic</h4>
         <div class="tprog" id="tprog"></div>
       </div>
-      <div class="scard">
+      <div class="scard" id="sc-weak">
         <h4>Weak list</h4>
         <div class="weaklist" id="weaklist"></div>
       </div>
@@ -964,6 +1009,7 @@ pre.pycode .cm{color:var(--ink3)}
 
 <script src="questions.js"></script>
 <script src="context.js"></script>
+<script src="flashcards.js"></script>
 <script src="python.js"></script>
 <script src="compendium.js"></script>
 <script>
@@ -975,13 +1021,16 @@ var MACHINE = window.MACHINE_2025GA || null;
 var MPRACTICE = window.MACHINE_PRACTICE || null;
 var C = window.COMPENDIUM || [];
 var CTX = window.CONTEXT || {sub:{},id:{}};
+var FLASH = window.FLASH || [];
+var PY_TOPIC = {id:'python', num:'Py', title:'Python'};
 var SN = window.SUBJECT_NAMES || {};
-var TOPIC_TITLE = {}; C.forEach(function(t){ TOPIC_TITLE[t.id]=t.title; });
+var TOPIC_TITLE = {}; C.forEach(function(t){ TOPIC_TITLE[t.id]=t.title; }); TOPIC_TITLE.python='Python';
 var esc = function(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
 
 /* ---------------- state ---------------- */
 var state = { marks:{}, scopes:null, limit:0, format:'practice', order:'smart', sv:false, bar:true, auto:true,
-               idx:0, revealed:false, picked:null, justGraded:null, queue:[], typed:{}, py:{}, mock:null };
+               idx:0, revealed:false, picked:null, justGraded:null, queue:[], typed:{}, py:{}, mock:null,
+               fscopes:null, fmarks:{}, fq:[], fi:0, ff:false };
 var LS='idsv-progress-v1', PROF='idsv-sync-code';
 var db=null, dbdoc=null, saveTimer=null, syncCode=null;
 
@@ -1011,11 +1060,14 @@ function loadLocal(){
     if(o&&typeof o.limit==='number') state.limit=o.limit;
     if(o&&typeof o.bar==='boolean') state.bar=o.bar;
     if(o&&typeof o.auto==='boolean') state.auto=o.auto;
+    if(o&&o.fmarks) state.fmarks=o.fmarks;
+    if(o&&(o.fscopes===null||Object.prototype.toString.call(o.fscopes)==='[object Array]')) state.fscopes=o.fscopes;
   } }catch(e){}
 }
 function saveLocal(){
   try{ localStorage.setItem(LS, JSON.stringify({marks:state.marks, sv:state.sv, py:state.py,
-        scopes:state.scopes, limit:state.limit, bar:state.bar, auto:state.auto})); }catch(e){}
+        scopes:state.scopes, limit:state.limit, bar:state.bar, auto:state.auto,
+        fscopes:state.fscopes, fmarks:state.fmarks})); }catch(e){}
 }
 function save(){
   saveLocal();
@@ -1023,7 +1075,7 @@ function save(){
   if(!dbdoc) return;
   setSaveState('saving');
   saveTimer=setTimeout(function(){
-    dbdoc.set({marks:state.marks, sv:state.sv, py:state.py, updated:Date.now()})
+    dbdoc.set({marks:state.marks, fmarks:state.fmarks, sv:state.sv, py:state.py, updated:Date.now()})
       .then(function(){ setSaveState('saved'); })
       .catch(function(){ setSaveState('local'); });
   }, 700);
@@ -1077,6 +1129,9 @@ function buildIntro(){
     ['Drill \u00b7 Mock exam','rehearse',
      'The same cards, dealt as a paper: every section of the real <strong>tag-2025gC</strong> exam that is still on the course, topped up towards 30 questions with a rotating sample of the rest of the course, so no two papers cover the same ground.',
      'A clock runs while you work, you get a score and a list of what you missed at the end, and everything you mark wrong lands in the weak list.'],
+    ['Drill \u00b7 Flashcards','memorise',
+     FLASH.length+' cards: every term the compendium defines, plus a Python set for the programming task. Tap a card to turn it over and see the definition, then mark whether you knew it.',
+     'The same <strong>Topics</strong> picker works here, with its own selection \u2014 so Python can be drilled on its own, and <strong>Weakest first</strong> brings back the cards you are still learning.'],
     ['Python','write code',
      'The exam ends with a Python programming assignment worth 6 points. Twenty short cards cover the built-ins it actually needs \u2014 <code>input()</code>, f-strings, the <code>while True</code> loop that stops on a sentinel word, lists and dictionaries, <code>sum()</code> and <code>len()</code>, <code>def</code>.',
      'Each card explains one function, shows it working, and gives you something to write \u2014 with a solution you can reveal. The last one is the full survey program from the 2025 paper.']
@@ -1144,9 +1199,29 @@ function buildCompendium(){
 }
 
 /* ---------------- drill ---------------- */
-function activeTopics(){
-  return C.filter(function(t){ return countFor(t.id)>0; }).map(function(t){ return t.id; });
+function isFlash(){ return state.format==='flash'; }
+/* the topics the picker offers — question topics for the drill, card topics
+   (Python included) for flashcards */
+function scopeTopics(){
+  if(isFlash()){
+    var has={}; FLASH.forEach(function(c){ has[c.topic]=1; });
+    return C.filter(function(t){ return has[t.id]; })
+            .map(function(t){ return {id:t.id, num:t.num, title:t.title}; })
+            .concat(has.python ? [PY_TOPIC] : []);
+  }
+  return C.filter(function(t){ return countFor(t.id)>0; })
+          .map(function(t){ return {id:t.id, num:t.num, title:t.title}; });
 }
+function activeTopics(){ return scopeTopics().map(function(t){ return t.id; }); }
+function curScopes(){ return isFlash() ? state.fscopes : state.scopes; }
+function setCurScopes(v){ if(isFlash()) state.fscopes=v; else state.scopes=v; }
+function scopeItems(){ return isFlash() ? FLASH : Q; }
+function markOf(it){ return (isFlash() ? state.fmarks : state.marks)[it.id]; }
+function curSet(){
+  var sc=curScopes();
+  return scopeItems().filter(function(it){ return !sc || sc.indexOf(it.topic)>=0; });
+}
+function noun(n){ return isFlash() ? (n===1?'card':'cards') : (n===1?'question':'questions'); }
 /* null means every topic; an array is exactly the topics ticked in the picker */
 function inScope(q){ return !state.scopes || state.scopes.indexOf(q.topic)>=0; }
 function scopeSet(){ return Q.filter(inScope); }
@@ -1158,6 +1233,7 @@ function shuffled(arr){
 }
 
 function buildQueue(){
+  if(isFlash()){ buildFlash(); return; }
   if(state.format==='mock'){
     if(!state.mock) newPaper();
     state.queue=state.mock.items.map(function(x){ return x.q; });
@@ -1245,6 +1321,91 @@ function wireContext(q, grade, live){
   }
 }
 
+/* ---------------- flashcards ----------------
+   The same topic picker and length, a separate selection and separate marks.
+   Space or a tap flips; once flipped, 1 = knew it, 2 = still learning. */
+function buildFlash(){
+  var list=curSet().slice();
+  if(state.order==='random') list=shuffled(list);
+  else if(state.order==='smart'){
+    /* shuffle first so cards of equal standing come in a fresh order each time */
+    list=shuffled(list);
+    var rank=function(c){ var m=state.fmarks[c.id]; if(!m) return 1; return m.s===1?2:0; };
+    list.sort(function(a,b){
+      var d=rank(a)-rank(b); if(d) return d;
+      var ma=state.fmarks[a.id], mb=state.fmarks[b.id];
+      return (ma?ma.t:0)-(mb?mb.t:0);
+    });
+  }
+  if(state.limit>0 && list.length>state.limit) list=list.slice(0,state.limit);
+  state.fq=list; state.fi=0; state.ff=false;
+}
+function renderFlash(){
+  var el=document.getElementById('flash'); if(!el) return;
+  el.hidden=false;
+  if(!state.fq.length){
+    el.innerHTML='<div class="card"><div class="empty">No cards in this selection. Open <strong>Topics</strong> and tick at least one.</div></div>';
+    renderBarSummary(); return;
+  }
+  if(state.fi>=state.fq.length) state.fi=0;
+  var c=state.fq[state.fi], m=state.fmarks[c.id];
+  el.innerHTML=
+    '<div class="fc-meta"><span class="tag">'+esc(TOPIC_TITLE[c.topic]||c.topic)+'</span>'+
+      (m?'<span class="tag '+(m.s===1?'seen':'weak')+'">'+(m.s===1?'knew it':'still learning')+'</span>':'')+
+      '<span class="cpos">'+(state.fi+1)+' / '+state.fq.length+'</span></div>'+
+    '<div class="fc-card'+(state.ff?' flipped':'')+'" id="fccard" role="button" tabindex="0" '+
+         'aria-pressed="'+(state.ff?'true':'false')+'" aria-label="Flashcard — activate to flip">'+
+      '<div class="fc-inner">'+
+        '<div class="fc-face fc-front" aria-hidden="'+(state.ff?'true':'false')+'">'+
+          '<span class="fc-k">Term</span><div class="fc-term">'+c.term+'</div>'+
+          '<span class="fc-hint">Tap or press space to see the definition</span></div>'+
+        '<div class="fc-face fc-back" aria-hidden="'+(state.ff?'false':'true')+'">'+
+          '<span class="fc-k">'+c.term+'</span><div class="fc-def">'+c.def+'</div></div>'+
+      '</div></div>'+
+    '<div class="cact" id="fcact"></div>';
+  document.getElementById('fccard').onclick=function(){ flipCard(); };
+  renderFlashActions();
+  renderBarSummary();
+}
+function renderFlashActions(){
+  var a=document.getElementById('fcact'); if(!a) return;
+  var h='';
+  if(!state.ff) h+='<button class="btn primary" id="fcflip">Show definition<span class="kbd">space</span></button>';
+  else h+='<button class="btn good" id="fcknew">Knew it<span class="kbd">1</span></button>'+
+          '<button class="btn bad" id="fclearn">Still learning<span class="kbd">2</span></button>';
+  h+='<div class="navpair"><button class="btn ghost" id="fcprev">← Back</button>'+
+     '<button class="btn ghost" id="fcnext">Next →</button></div>';
+  a.innerHTML=h;
+  var b;
+  if((b=document.getElementById('fcflip'))) b.onclick=flipCard;
+  if((b=document.getElementById('fcknew'))) b.onclick=function(){ fMark(1); };
+  if((b=document.getElementById('fclearn'))) b.onclick=function(){ fMark(0); };
+  document.getElementById('fcprev').onclick=function(){ fStep(-1); };
+  document.getElementById('fcnext').onclick=function(){ fStep(1); };
+}
+/* flipping only toggles a class, so the card turns rather than being redrawn */
+function flipCard(){
+  var card=document.getElementById('fccard'); if(!card) return;
+  state.ff=!state.ff;
+  card.classList.toggle('flipped', state.ff);
+  card.setAttribute('aria-pressed', state.ff?'true':'false');
+  card.querySelector('.fc-front').setAttribute('aria-hidden', state.ff?'true':'false');
+  card.querySelector('.fc-back').setAttribute('aria-hidden', state.ff?'false':'true');
+  renderFlashActions();
+}
+function fStep(d){
+  var n=state.fq.length; if(!n) return;
+  state.fi=(state.fi+d+n)%n; state.ff=false;
+  renderFlash(); toTop();
+}
+function fMark(v){
+  var c=state.fq[state.fi]; if(!c) return;
+  var prev=state.fmarks[c.id];
+  state.fmarks[c.id]={s:v, n:(prev?prev.n:0)+1, t:Date.now()};
+  save(); renderStats();
+  fStep(1);
+}
+
 function sectionOf(q){
   if(state.format!=='mock' || !state.mock) return null;
   for(var i=0;i<state.mock.items.length;i++) if(state.mock.items[i].q.id===q.id) return state.mock.items[i].section;
@@ -1254,6 +1415,9 @@ function sectionOf(q){
 function renderCard(){
   var card=document.getElementById('card');
   var res=document.getElementById('mockresult');
+  var fl=document.getElementById('flash');
+  if(isFlash()){ card.hidden=true; res.hidden=true; renderFlash(); renderMockNav(); return; }
+  if(fl) fl.hidden=true;
   if(state.format==='mock' && state.mock && state.mock.done){
     card.hidden=true; res.hidden=false;
     var nv=document.getElementById('mocknav'); if(nv) nv.hidden=true;
@@ -1439,11 +1603,16 @@ function prev(){ if(state.idx>0) goTo(state.idx-1); }
 function renderStats(){
   /* in mock format the panel tracks the paper you are sitting, not the picker */
   var mock = state.format==='mock' && state.mock;
-  var set = mock ? state.mock.items.map(function(x){ return x.q; }) : scopeSet();
+  var set = mock ? state.mock.items.map(function(x){ return x.q; }) : curSet();
   var hd=document.getElementById('scopehead');
-  if(hd) hd.textContent = mock ? 'Progress on this paper' : 'Progress in scope';
+  if(hd) hd.textContent = mock ? 'Progress on this paper' : isFlash() ? 'Cards in selection' : 'Progress in scope';
+  /* question-only panels make no sense beside a flashcard */
+  document.getElementById('sc-topic').hidden = isFlash();
+  document.getElementById('sc-weak').hidden = isFlash();
+  document.getElementById('lok').textContent = isFlash() ? 'Knew it' : 'Got it';
+  document.getElementById('lbad').textContent = isFlash() ? 'Still learning' : 'Not yet';
   var ok=0, bad=0;
-  set.forEach(function(q){ var m=state.marks[q.id]; if(!m) return; if(m.s===1) ok++; else bad++; });
+  set.forEach(function(it){ var m=markOf(it); if(!m) return; if(m.s===1) ok++; else bad++; });
   var tot=set.length||1, unseen=set.length-ok-bad;
   document.getElementById('pctnum').innerHTML=Math.round(ok/tot*100)+'<span>%</span>';
   document.getElementById('mok').style.width=(ok/tot*100)+'%';
@@ -1493,10 +1662,12 @@ function topicStats(id){
 /* --- drill scope: any number of topics --- */
 function renderScopeList(){
   var el=document.getElementById('scopelist'); if(!el) return;
-  var all=!state.scopes;
-  el.innerHTML = C.filter(function(t){ return countFor(t.id)>0; }).map(function(t){
-    var st=topicStats(t.id);
-    var on = all || state.scopes.indexOf(t.id)>=0;
+  var sc=curScopes(), all=!sc, items=scopeItems();
+  el.innerHTML = scopeTopics().map(function(t){
+    var mine=items.filter(function(it){ return it.topic===t.id; });
+    var ok=mine.filter(function(it){ var m=markOf(it); return m&&m.s===1; }).length;
+    var st={n:mine.length, pct: mine.length?Math.round(ok/mine.length*100):0};
+    var on = all || sc.indexOf(t.id)>=0;
     return '<button class="popt multi" role="checkbox" data-topic="'+t.id+'" aria-checked="'+(on?'true':'false')+'">'+
       '<span class="box" aria-hidden="true">✓</span>'+
       '<span class="popt-name"><span class="pn" style="margin-right:7px">'+t.num+'</span>'+esc(t.title)+'</span>'+
@@ -1504,38 +1675,39 @@ function renderScopeList(){
       '<span class="pb"><i style="width:'+st.pct+'%"></i></span>'+
       '</button>';
   }).join('');
-  var n=scopeSet().length;
+  var n=curSet().length;
   var sum=document.getElementById('scopesum');
   var tot=activeTopics().length;
-  if(sum) sum.textContent = (all ? 'All '+tot+' topics' : state.scopes.length+' of '+tot) + ' · ' + n + ' question' + (n===1?'':'s');
+  if(sum) sum.textContent = (all ? 'All '+tot+' topics' : sc.length+' of '+tot) + ' · ' + n + ' ' + noun(n);
   renderScopeBtn();
 }
 function renderScopeBtn(){
   var v=document.getElementById('scopeval'), c=document.getElementById('scopecount');
   if(!v) return;
-  var all=!state.scopes;
+  var sc=curScopes(), all=!sc;
   if(all) v.textContent='All topics';
-  else if(state.scopes.length===0) v.textContent='No topics';
-  else if(state.scopes.length===1){
-    var t=C.filter(function(x){return x.id===state.scopes[0];})[0];
-    v.textContent = t?t.title:state.scopes[0];
-  } else v.textContent=state.scopes.length+' topics';
-  var set=scopeSet();
-  var ok=set.filter(function(q){ var m=state.marks[q.id]; return m&&m.s===1; }).length;
+  else if(sc.length===0) v.textContent='No topics';
+  else if(sc.length===1) v.textContent = TOPIC_TITLE[sc[0]] || sc[0];
+  else v.textContent=sc.length+' topics';
+  var set=curSet();
+  var ok=set.filter(function(it){ var m=markOf(it); return m&&m.s===1; }).length;
   var shown = state.limit>0 ? Math.min(state.limit,set.length)+' of '+set.length : String(set.length);
   c.textContent = shown + ' · ' + (set.length?Math.round(ok/set.length*100):0) + '%';
 }
 function toggleTopic(id){
-  if(!state.scopes){ state.scopes=activeTopics().filter(function(x){ return x!==id; }); }
+  var sc=curScopes();
+  if(!sc){ sc=activeTopics().filter(function(x){ return x!==id; }); }
   else {
-    var i=state.scopes.indexOf(id);
-    if(i>=0) state.scopes.splice(i,1); else state.scopes.push(id);
-    if(state.scopes.length===activeTopics().length) state.scopes=null;
+    sc=sc.slice();
+    var i=sc.indexOf(id);
+    if(i>=0) sc.splice(i,1); else sc.push(id);
+    if(sc.length===activeTopics().length) sc=null;
   }
+  setCurScopes(sc);
   applyScopes();
 }
 function setScopes(list, quiet){
-  state.scopes = (!list || list.length===activeTopics().length) ? null : list.slice();
+  setCurScopes((!list || list.length===activeTopics().length) ? null : list.slice());
   applyScopes(quiet);
 }
 function applyScopes(quiet){
@@ -1551,7 +1723,7 @@ function renderSizeList(){
   var el=document.getElementById('sizelist'); if(!el) return;
   el.innerHTML=SIZES.map(function(x){
     return '<button class="popt" role="option" data-size="'+x[0]+'" aria-selected="'+(x[0]===state.limit?'true':'false')+'">'+
-      '<span class="popt-name">'+esc(x[1])+(x[0]?' questions':'')+'</span></button>';
+      '<span class="popt-name">'+esc(x[1])+(x[0]?' '+noun(2):'')+'</span></button>';
   }).join('');
   var v=document.getElementById('sizeval');
   if(v) v.textContent = state.limit ? String(state.limit) : 'All';
@@ -1619,7 +1791,7 @@ function wirePickers(){
   var all=document.getElementById('scopeall');
   if(all) all.onclick=function(e){ e.stopPropagation(); setScopes(null); };
   var none=document.getElementById('scopenone');
-  if(none) none.onclick=function(e){ e.stopPropagation(); state.scopes=[]; applyScopes(); };
+  if(none) none.onclick=function(e){ e.stopPropagation(); setCurScopes([]); applyScopes(); };
 }
 
 /* ---------------- controls ---------------- */
@@ -1639,9 +1811,13 @@ function setFormat(f){
   [].slice.call(document.querySelectorAll('[data-fmt]')).forEach(function(x){
     x.setAttribute('aria-pressed', x.getAttribute('data-fmt')===f?'true':'false');
   });
-  document.getElementById('practicebar').hidden = f!=='practice';
+  document.getElementById('practicebar').hidden = f==='mock';
   document.getElementById('mockbar').hidden = f!=='mock';
-  document.getElementById('orderseg').hidden = f!=='practice';
+  document.getElementById('orderseg').hidden = f==='mock';
+  document.getElementById('svbtn').hidden = f==='flash';
+  document.getElementById('autobtn').hidden = f==='flash';
+  if(openPicker) setPickerOpen(openPicker,false);
+  renderScopeList(); renderSizeList();
   document.getElementById('bpbtn').hidden = f!=='mock';
   if(f!=='mock'){
     stopClock();
@@ -1686,7 +1862,7 @@ function buildControls(){
   };
   document.getElementById('resetbtn').onclick=function(){
     if(!confirm('Clear all your progress marks? This cannot be undone.')) return;
-    state.marks={}; state.typed={}; save(); buildQueue(); renderCard(); renderStats();
+    state.marks={}; state.typed={}; state.fmarks={}; save(); buildQueue(); renderCard(); renderStats();
   };
   document.getElementById('newpaper').onclick=function(){ newPaper(); renderCard(); renderStats(); toTop(); };
   document.getElementById('bpbtn').onclick=function(){
@@ -1714,6 +1890,16 @@ document.addEventListener('keydown', function(e){
   if(document.getElementById('panel-drill').hidden) return;
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
   if(document.activeElement && document.activeElement.tagName==='TEXTAREA') return;
+  if(isFlash()){
+    if(!state.fq.length) return;
+    if(e.target.closest && e.target.closest('.picker')) return;
+    if(e.key===' '||e.key==='Enter'){ e.preventDefault(); flipCard(); }
+    else if(e.key==='ArrowRight'){ fStep(1); }
+    else if(e.key==='ArrowLeft'){ fStep(-1); }
+    else if(e.key==='1' && state.ff){ fMark(1); }
+    else if(e.key==='2' && state.ff){ fMark(0); }
+    return;
+  }
   if(!state.queue.length) return;
   if(state.format==='mock' && state.mock && state.mock.done) return;
   if(e.key===' '){ e.preventDefault(); if(!state.revealed) reveal(); else next(); }
@@ -1859,6 +2045,11 @@ function renderBarSummary(){
     el.innerHTML = m.done
       ? 'Mock \u00b7 <b>'+ok+'</b> / '+m.items.length+' \u00b7 '+fmtClock(m.took||0)
       : 'Mock \u00b7 <b>'+(state.idx+1)+'</b> of '+m.items.length+' \u00b7 '+ok+' right \u00b7 '+fmtClock(Date.now()-m.at);
+  } else if(isFlash()){
+    var fsc=state.fscopes;
+    var fname = !fsc ? 'All topics' : fsc.length===0 ? 'No topics'
+              : fsc.length===1 ? (TOPIC_TITLE[fsc[0]]||fsc[0]) : fsc.length+' topics';
+    el.innerHTML = 'Flashcards \u00b7 '+esc(fname)+' \u00b7 <b>'+(state.fq.length?(state.fi+1):0)+'</b> of '+state.fq.length;
   } else {
     var set=scopeSet();
     var name = !state.scopes ? 'All topics'
@@ -1959,7 +2150,7 @@ var HOSTED = !!(window.claude && window.claude.use);
 
 function progressBlob(){
   return JSON.stringify({app:'idsv-tentaplugg', v:1, saved:new Date().toISOString(),
-                         marks:state.marks, py:state.py, typed:state.typed}, null, 1);
+                         marks:state.marks, fmarks:state.fmarks, py:state.py, typed:state.typed}, null, 1);
 }
 function applyProgress(text){
   var o;
@@ -1967,6 +2158,7 @@ function applyProgress(text){
   if(!o || o.app!=='idsv-tentaplugg' || !o.marks) return 'That file is not progress from this app.';
   var before=Object.keys(state.marks).length;
   mergeMarks(o.marks);
+  if(o.fmarks) mergeFMarks(o.fmarks);
   if(o.py) for(var k in o.py) if(!state.py[k]) state.py[k]=o.py[k];
   if(o.typed) for(var t in o.typed) if(!state.typed[t]) state.typed[t]=o.typed[t];
   saveLocal(); save();
@@ -2019,6 +2211,7 @@ function renderSync(msg, cls){
       if(snap && snap.exists){
         var data=snap.data()||{};
         mergeMarks(data.marks||{});
+        mergeFMarks(data.fmarks||{});
         if(data.py){ for(var pk in data.py) if(!state.py[pk]) state.py[pk]=data.py[pk]; }
       }
       syncCode=v; storeCode(v); dbdoc=target;
@@ -2153,6 +2346,11 @@ if(state.scopes){
   var kept=state.scopes.filter(function(id){ return live.indexOf(id)>=0; });
   state.scopes = (kept.length===0 && state.scopes.length>0) || kept.length===live.length ? null : kept;
 }
+if(state.fscopes){
+  var fl={}; FLASH.forEach(function(c){ fl[c.topic]=1; });
+  var fk=state.fscopes.filter(function(id){ return fl[id]; });
+  state.fscopes = (fk.length===0 && state.fscopes.length>0) || fk.length===Object.keys(fl).length ? null : fk;
+}
 buildCompendium();
 buildControls();
 buildQueue();
@@ -2172,6 +2370,11 @@ if(window.setWidthTiers) window.setWidthTiers();
 measure();
 markScrollingTables();
 
+function mergeFMarks(remote){
+  for(var k in remote){
+    if(!state.fmarks[k] || (remote[k].t||0) > (state.fmarks[k].t||0)) state.fmarks[k]=remote[k];
+  }
+}
 function mergeMarks(remote){
   var merged={}, k;
   for(k in remote) merged[k]=remote[k];
@@ -2206,6 +2409,7 @@ if(window.claude && window.claude.use){
       if(snap && snap.exists){
         var data=snap.data()||{};
         mergeMarks(data.marks||{});
+        mergeFMarks(data.fmarks||{});
         if(typeof data.sv==='boolean'){ state.sv=data.sv; document.getElementById('svbtn').setAttribute('aria-pressed', state.sv?'true':'false'); }
         if(data.py){ for(var pk in data.py) if(!state.py[pk]) state.py[pk]=data.py[pk]; }
       }
