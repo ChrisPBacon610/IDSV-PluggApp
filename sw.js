@@ -2,7 +2,7 @@
    Cache-first: after the first visit the app opens instantly and works with no
    signal. CACHE is rebuilt from the file contents on every build, so publishing
    a new version replaces the old cache rather than serving it forever. */
-const CACHE = 'idsv-d72f75887f';
+const CACHE = 'idsv-a2f24a3ccc';
 const ASSETS = [
   "./",
   "index.html",
@@ -53,7 +53,11 @@ const ASSETS = [
   "fig/fig23-dark.png",
   "fig/fig23-light.png",
   "fig/fig24-dark.png",
-  "fig/fig24-light.png"
+  "fig/fig24-light.png",
+  "fig/fig25-dark.png",
+  "fig/fig25-light.png",
+  "fig/fig26-dark.png",
+  "fig/fig26-light.png"
 ];
 
 self.addEventListener('install', e => {
